@@ -1,0 +1,4 @@
+requests
+beautifulsoup4
+pandas
+python3 -m pip install requests beautifulsoup4 pandas
