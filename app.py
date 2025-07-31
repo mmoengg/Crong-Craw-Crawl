@@ -5,6 +5,44 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
+def crawl_sing_seoul():
+    from selenium import webdriver
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.chrome.service import Service
+    from selenium.webdriver.chrome.options import Options
+    from webdriver_manager.chrome import ChromeDriverManager
+    import time
+    import pandas as pd
+
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
+
+    url = "https://1in.seoul.go.kr/front/partcptn/partcptnListPage.do"
+    driver.get(url)
+    time.sleep(1)  # 데이터 로딩 대기
+
+    rows = driver.find_elements(By.CSS_SELECTOR, 'table tbody tr')
+    data = []
+    for row in rows:
+        cols = row.find_elements(By.TAG_NAME, "td")
+        title = cols[2].text.strip() if len(cols) > 2 else ''
+        local = cols[1].text.strip() if len(cols) > 1 else ''
+        # '중장년'이 title에 포함되면 제외
+        if '중장년' in title:
+            continue
+        data.append([title, local])
+
+    driver.quit()
+
+    df = pd.DataFrame(data, columns=['제목', '지역'])
+    return df
+
+
 # --- 금천구립도서관 ---
 def crawl_gc_book():
     url = 'https://geumcheonlib.seoul.kr/geumcheonlib/uce/programList.do?selfId=1090'
@@ -122,6 +160,13 @@ def home():
     df = crawl_gc_book()
     notices = df.to_dict(orient='records')  # 리스트 딕셔너리 형태로 변환
     return render_template('index.html', notices=notices)
+
+@app.route('/singseoul')
+def singseoul():
+    df = crawl_sing_seoul()
+
+    notices = df.to_dict(orient='records')  # 리스트 딕셔너리 형태로 변환
+    return render_template('singseoul.html', notices=notices)
 
 @app.route('/gcbook')
 def gcbook():

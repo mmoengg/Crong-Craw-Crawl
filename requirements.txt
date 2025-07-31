@@ -3,3 +3,4 @@ requests
 pandas
 beautifulsoup4
 Werkzeug>=2.0.0
+selenium
