@@ -59,6 +59,12 @@ def crawl_gc_family(max_page=3, rows=5):
     return df
 
 # --- 라우터 ---
+@app.route('/')
+def home():
+    df = crawl_gc_book()
+    notices = df.to_dict(orient='records')  # 리스트 딕셔너리 형태로 변환
+    return render_template('index.html', notices=notices)
+
 @app.route('/gcbook')
 def gcbook():
     df = crawl_gc_book()
