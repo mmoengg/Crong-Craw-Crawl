@@ -42,18 +42,27 @@ def crawl_sing_seoul():
     df = pd.DataFrame(data, columns=['제목', '지역'])
     return df
 
-
 # --- 금천구립도서관 ---
 def crawl_gc_book():
     url = 'https://geumcheonlib.seoul.kr/geumcheonlib/uce/programList.do?selfId=1090'
     headers = {'User-Agent': 'Mozilla/5.0'}
-    
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
+
+    try:
+        response = requests.get(url, headers=headers, timeout=10)  # 타임아웃 10초 지정
+        response.raise_for_status()
+    except requests.exceptions.Timeout:
+        print("요청 시간이 초과되었습니다. 나중에 다시 시도하세요.")
+        return pd.DataFrame()  # 빈 데이터프레임 반환하거나 적절히 처리
+    except requests.exceptions.HTTPError as e:
+        print(f"HTTP 에러 발생: {e}")
+        return pd.DataFrame()
+    except requests.exceptions.RequestException as e:
+        print(f"요청 중 에러 발생: {e}")
+        return pd.DataFrame()
     
     soup = BeautifulSoup(response.text, 'html.parser')
     table = soup.find('table')
-    rows = table.find_all('tr')[1:]  # 제목 행 제외
+    rows = table.find_all('tr')[1:]
 
     data = []
     for row in rows:
@@ -61,16 +70,18 @@ def crawl_gc_book():
         input_tag = row.find('input', id='BOA_IDX')
         input_id = input_tag.get('value', '') if input_tag else ''
         if cols:
-            category = cols[1] # 대상
-            title = cols[0]  # 제목
+            category = cols[1]
+            title = cols[0]
             if category == '성인':
-                # '성인'인 경우만 추가
+                if '중장년' in title:
+                    continue
                 selected_cols = [title, input_id]
                 data.append(selected_cols)
 
     columns = ['제목', '게시글아이디']
     df = pd.DataFrame(data, columns=columns)
     return df
+
 
 # --- 금천 가족센터 ---
 def crawl_gc_family(max_page=3, rows=5):
@@ -154,6 +165,33 @@ def crawl_gs_family(max_page=3, rows=5):
     return df
 
 
+# --- 마포 가족센터 ---
+def crawl_mp_family(max_page=3, rows=5):
+    url = 'https://mapo.familynet.or.kr/center/lay1/program/S295T322C451/recruitReceipt/list.do'
+    headers = {'User-Agent': 'Mozilla/5.0'}
+
+    data = []
+    for page in range(1, max_page + 1):
+        params = {'rows': rows, 'cpage': page}
+        response = requests.get(url, headers=headers, params=params)  # 페이지별 요청
+        response.raise_for_status()
+
+        soup = BeautifulSoup(response.text, 'html.parser')
+        items = soup.select('li.clearfix')
+        if not items:
+            print(f"Page {page}: 데이터 항목을 찾지 못했어요.")
+            continue
+
+        for item in items:
+            a_tag = item.find('a')
+            title = a_tag.get_text(strip=True) if a_tag else ''
+            link = a_tag['href'] if a_tag and 'href' in a_tag.attrs else ''
+            data.append([title, link])
+
+    columns = ['제목', '링크']
+    df = pd.DataFrame(data, columns=columns)
+    return df
+
 # --- 라우터 ---
 @app.route('/')
 def home():
@@ -191,6 +229,12 @@ def gsfamily():
     df = crawl_gs_family()
     notices = df.to_dict(orient='records')  # 리스트 딕셔너리 형태로 변환
     return render_template('gsfamily.html', notices=notices)
+
+@app.route('/mpfamily')
+def mpfamily():
+    df = crawl_mp_family()
+    notices = df.to_dict(orient='records')  # 리스트 딕셔너리 형태로 변환
+    return render_template('mpfamily.html', notices=notices)
 
 
 if __name__ == "__main__":

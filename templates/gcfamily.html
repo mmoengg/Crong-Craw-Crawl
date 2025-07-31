@@ -19,6 +19,11 @@
                 강서구
             </a>
         </h2>
+        <h2 class="title">
+            <a href="/mpfamily">
+                마포구
+            </a>
+        </h2>
     </div>
     <table>
         <thead>
@@ -30,8 +35,7 @@
             {% for row in notices %}
             <tr>
                 <td>
-                    <a href="https://geumcheonlib.seoul.kr/geumcheonlib/uce/programDetail.do?headerId=&selfId=1090&INST_CD=INST0000&INST_GB=1&idxNo={{ row['링크'] }}"
-                        target="_blank">{{ row['제목'] }}</a>
+                    <a href="https://geumchfc.familynet.or.kr/{{ row['링크'] }}" target="_blank">{{ row['제목'] }}</a>
                 </td>
             </tr>
             {% endfor %}

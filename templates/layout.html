@@ -16,11 +16,6 @@
             <nav>
                 <ul class="gnb">
                     <li>
-                        <a href="/singseoul" class="{% if request.path == '/singseoul' %}on{% endif %}">
-                            씽글벙글
-                        </a>
-                    </li>
-                    <li>
                         <a href="/gcfamily" class="{% if request.path == '/gcfamily' %}on{% endif %}">
                             가족센터
                         </a>
@@ -28,6 +23,19 @@
                     <li>
                         <a href="/gcbook" class="{% if request.path == '/gcbook' %}on{% endif %}">
                             금천구립도서관
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://1in.seoul.go.kr/front/partcptn/partcptnListPage.do" target="_blank"
+                            class="{% if request.path == '/singseoul' %}on{% endif %}">
+                            <!-- <a href="/singseoul" class="{% if request.path == '/singseoul' %}on{% endif %}"> -->
+                            씽글벙글
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://yeyak.seoul.go.kr/web/search/selectPageListDetailSearchImg.do?code=T000&dCode="
+                            target="_blank" class="{% if request.path == '/singseoul' %}on{% endif %}">
+                            공공서비스
                         </a>
                     </li>
                 </ul>
