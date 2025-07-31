@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Crong Craw Crawl</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="wrap">
+        <header class="header">
+            <nav>
+                <ul class="gnb">
+                    <li><a href="/">홈</a></li>
+                    <li><a href="/gcbook" class="on">금천구립도서관</a></li>
+                    <li><a href="/gcfamily">금천 가족센터</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="content" role="main">
+            <div class="table_wrap">
+                <h1 class="title">금천구립도서관</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>제목</th>
+                            <th>작성자</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in notices %}
+                        <tr>
+                            <td>
+                                <a href="https://geumcheonlib.seoul.kr/geumcheonlib/uce/board/noticeDetail.do?headerId=&selfId=1082&INST_CD=INST0000&INST_GB=1&idxNo={{ row['링크'] }}"
+                                    target="_blank">{{ row['제목'] }}</a>
+                            </td>
+                            <td>{{ row['작성자'] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <footer class="footer" role="contentinfo">
+        <p>&copy; 2025 Crong Craw Crawl</p>
+    </footer>
+    </div>
+</body>
+
+</html>
