@@ -24,7 +24,7 @@ def crawl_sing_seoul():
 
     url = "https://1in.seoul.go.kr/front/partcptn/partcptnListPage.do"
     driver.get(url)
-    time.sleep(1)  # 데이터 로딩 대기
+    time.sleep(2)  # 데이터 로딩 대기
 
     rows = driver.find_elements(By.CSS_SELECTOR, 'table tbody tr')
     data = []
