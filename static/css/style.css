@@ -20,17 +20,19 @@
 
         table th,
         table td {
-            padding: 16px;
+            padding: 24px 0;
             font-size: 12px;
             font-weight: 400;
             line-height: 14px;
             color: #000;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #e0e0e0;
         }
 
         table th {
-            text-align: center;
-            background-color: #f2f2f2;
+            text-align: left;
+            font-weight: 500;
+            padding: 12px 0;
+            border-bottom: 2px solid #8c8c8c;
         }
 
         table td>a {
@@ -45,38 +47,49 @@
         }
 
         .header {
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 40px;
+        }
+        .logo {
+            width: 80px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo > a {
+            font-size: 12px;
+            font-weight: 700;
+            color: #000;
         }
 
         .gnb {
             width: 100%;
             height: 60px;
-            padding: 0 32px;
             font-size: 14px;
-            background-color: #f2f2f2;
             display: flex;
             align-items: center;
             justify-content: start;
             gap: 20px;
         }
         .gnb a {
-            color: #333;
-            height: 60px;
-            border-bottom: 1px solid transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: #000;
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease-in-out;
         }
+        .gnb a:hover, 
         .gnb a.on {
-            color: #2f9964;
-            border-bottom: 1px solid #2f9964;
+            border-bottom: 2px solid #000;
         }
 
 
         .content {
+            margin-top: -60px;
             padding-top: 60px;
             padding-bottom: 30px;
         }
@@ -90,15 +103,31 @@
             font-size: 10px;
             line-height: 30px;
             text-align: center;
-            color: #333;
+            color: #000;
             background-color: #f2f2f2;
         }
 
 
+        .title_wrap {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 12px;
+        }
         .title {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
+            font-size: 24px;
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            color: #ccc;
+        }
+        .title.on {
+            font-weight: 600;
+            color: #000;
+        }
+        .title a {
+            color: #000;
         }
 
         .table_wrap {

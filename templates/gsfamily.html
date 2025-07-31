@@ -4,7 +4,21 @@
 <!-- 데이터 테이블 등 페이지별 실제 내용 -->
 <div class="table_wrap">
     <div class="title_wrap">
-        <h2 class="title on">금천구립도서관</h2>
+        <h2 class="title">
+            <a href="/gcfamily">
+                금천구
+            </a>
+        </h2>
+        <h2 class="title">
+            <a href="/ycfamily">
+                양천구
+            </a>
+        </h2>
+        <h2 class="title on">
+            <a href="/gsfamily">
+                강서구
+            </a>
+        </h2>
     </div>
     <table>
         <thead>
@@ -16,7 +30,7 @@
             {% for row in notices %}
             <tr>
                 <td>
-                    <a href="https://geumcheonlib.seoul.kr/geumcheonlib/uce/board/noticeDetail.do?headerId=&selfId=1082&INST_CD=INST0000&INST_GB=1&idxNo={{ row['게시글아이디'] }}"
+                    <a href="https://geumcheonlib.seoul.kr/geumcheonlib/uce/programDetail.do?headerId=&selfId=1090&INST_CD=INST0000&INST_GB=1&idxNo={{ row['링크'] }}"
                         target="_blank">{{ row['제목'] }}</a>
                 </td>
             </tr>

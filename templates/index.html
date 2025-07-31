@@ -1,34 +1,8 @@
-<!DOCTYPE html>
-<html lang="ko">
+{% extends "layout.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Crong Craw Crawl</title>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-
-<body>
-    <div class="wrap">
-        <header class="header">
-            <nav>
-                <ul class="gnb">
-                    <li><a href="/" class="on">홈</a></li>
-                    <li><a href="/gcbook">금천구립도서관</a></li>
-                    <li><a href="/gcfamily">금천 가족센터</a></li>
-                </ul>
-            </nav>
-        </header>
-        <div class="content" role="main">
-            <div class="table_wrap">
-                <h1 class="title">홈</h1>
-            </div>
-        </div>
-    </div>
-    <footer class="footer" role="contentinfo">
-        <p>&copy; 2025 Crong Craw Crawl</p>
-    </footer>
-    </div>
-</body>
-
-</html>
+{% block content %}
+<!-- 데이터 테이블 등 페이지별 실제 내용 -->
+<div class="table_wrap">
+    <h1 class="title">홈</h1>
+</div>
+{% endblock %}

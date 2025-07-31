@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Crong Craw Crawl{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="wrap">
+        <header class="header">
+            <h1 class="logo">
+                <a href="/">C.C.C</a>
+            </h1>
+            <nav>
+                <ul class="gnb">
+                    <li>
+                        <a href="/gcbook" class="{% if request.path == '/gcbook' %}on{% endif %}">
+                            금천구립도서관
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/gcfamily" class="{% if request.path == '/gcfamily' %}on{% endif %}">
+                            가족센터
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div class="content" role="main">
+            <!-- 각 페이지의 개별 내용이 들어오는 자리 -->
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    <footer class="footer" role="contentinfo">
+        <p>&copy; 2025 Crong Craw Crawl</p>
+    </footer>
+    </div>
+</body>
+
+</html>
